@@ -1,8 +1,9 @@
 // Book Class: Represents a Book
 class Book {
-    constructor(title, year) {
+    constructor(title, year, ocena) {
       this.title = title;      
       this.year = year;
+      this.ocena = ocena;
     }
   }
   
@@ -22,6 +23,7 @@ class Book {
       row.innerHTML = `
         <td>${book.title}</td>        
         <td>${book.year}</td>
+        <td>${book.ocena}</td>
         <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
       `;
   
@@ -49,6 +51,7 @@ class Book {
     static clearFields() {
       document.querySelector('#title').value = '';      
       document.querySelector('#year').value = '';
+      document.querySelector('#ocena').value = '';
     }
   }
   
@@ -71,11 +74,11 @@ class Book {
       localStorage.setItem('books', JSON.stringify(books));
     }
   
-    static removeBook(year) {
+    static removeBook(ocena) {
       const books = Store.getBooks();
   
       books.forEach((book, index) => {
-        if(book.year === year) {
+        if(book.ocena === ocena) {
           books.splice(index, 1);
         }
       });
@@ -95,13 +98,14 @@ class Book {
     // Get form values
     const title = document.querySelector('#title').value;    
     const year = document.querySelector('#year').value;
+    const ocena = document.querySelector('#ocena').value;
   
     // Validate
-    if(title === '' ||  year === '') {
+    if(title === '' ||  year === '' || ocena === '') {
       UI.showAlert('Molim vas popunite sva polja', 'danger');
     } else {
       // Instatiate book
-      const book = new Book(title, year);
+      const book = new Book(title, year, ocena);
   
       // Add Book to UI
       UI.addBookToList(book);
